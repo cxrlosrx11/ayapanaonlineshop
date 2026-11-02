@@ -82,9 +82,9 @@ h1,h2,h3{font-family:var(--font-display);font-weight:800;margin:0;text-wrap:bala
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding-bottom:56px}
 .card{background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;min-width:0}
 .card:hover{border-color:var(--gold-deep)}
-.card-media{position:relative;display:block;width:100%;aspect-ratio:4/5;max-width:100%;border:0;padding:0;background:var(--surface-2);cursor:pointer;overflow:hidden}
+.card-media{position:relative;display:block;width:100%;aspect-ratio:4/5;max-width:100%;border:0;padding:0;background:#fff;cursor:pointer;overflow:hidden}
 .fill{position:absolute;inset:0}
-.card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7%}
 .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:900;font-size:84px;color:var(--gold-deep)}
 .card-body{display:flex;flex-direction:column;gap:6px;padding:14px;flex:1;min-width:0}
 .card-body h3{font-size:19px;overflow-wrap:anywhere}
@@ -174,8 +174,8 @@ table{width:100%;border-collapse:collapse;font-size:14px}
 th{text-align:left;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
 td{padding:10px;border-bottom:1px solid var(--border);vertical-align:middle}
 td.r,th.r{text-align:right}
-.thumb{width:44px;height:44px;background:var(--surface-2);position:relative;overflow:hidden;border:1px solid var(--border)}
-.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb{width:44px;height:44px;background:#fff;position:relative;overflow:hidden;border:1px solid var(--border)}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:4%}
 .thumb .mono{font-size:22px}
 .bar{height:6px;background:var(--surface-2);margin-top:4px}
 .bar i{display:block;height:100%;background:var(--accent-hi)}
@@ -188,9 +188,32 @@ td.r,th.r{text-align:right}
 .modal h2{font-size:28px;margin-bottom:14px}
 .detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
 .detail .card-media{cursor:default}
-.preview{width:120px;height:150px;position:relative;background:var(--surface-2);border:1px solid var(--border);overflow:hidden;max-width:100%}
-.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.preview{width:120px;height:150px;position:relative;background:#fff;border:1px solid var(--border);overflow:hidden;max-width:100%}
+.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:max(20px,env(safe-area-inset-bottom,0px));background:var(--gold);color:var(--ink);padding:10px 18px;font-weight:700;z-index:60;max-width:calc(100% - 32px)}
+/* product page */
+.pp{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start;padding-block:24px 64px}
+.gal{min-width:0}
+.stage{position:relative;background:#fff;aspect-ratio:1/1;max-width:100%;overflow:hidden;touch-action:pan-y}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:6%}
+.zoom{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid #ddd;color:#111;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.25)}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 0 6px;max-width:100%}
+.thumbs button{flex:0 0 72px;width:72px;height:72px;background:#fff;border:2px solid transparent;padding:0;position:relative;cursor:pointer}
+.thumbs button.on{border-color:var(--gold)}
+.thumbs img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:6%}
+.info{text-align:center;min-width:0;padding-top:8px}
+.ptitle{font-size:clamp(24px,5vw,34px);letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin:6px 0 0;overflow-wrap:anywhere}
+.pprice{font-family:var(--font-display);font-size:24px;font-weight:800;letter-spacing:.06em;color:var(--gold-hi);margin:12px 0 4px}
+.pdesc{text-align:left;color:var(--mut);white-space:pre-wrap;overflow-wrap:anywhere;margin:20px 0}
+.buyrow{display:flex;gap:12px;align-items:stretch;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.buyrow .btn{flex:1 1 180px;padding-block:14px}
+.back{display:inline-block;margin-top:10px}
+.pimgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-bottom:10px}
+.pimg{border:1px solid var(--border);background:var(--surface);padding:6px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pimg .box1{position:relative;aspect-ratio:1/1;background:#fff;overflow:hidden}
+.pimg .box1 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.pimg .tag{font-size:11px;font-weight:700;color:var(--accent);text-align:center}
+.pimg button{font-size:12px;padding:4px 6px}
 .foot{border-top:1px solid var(--border);padding-block:26px;color:var(--mut);font-size:13px}
 .foot .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 
@@ -205,6 +228,7 @@ td.r,th.r{text-align:right}
   .line{grid-template-columns:minmax(0,1fr) auto}
   .line .qty{grid-column:1}
   .brand{font-size:21px}
+  .pp{grid-template-columns:minmax(0,1fr);gap:14px;padding-block:12px 48px}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .card-body{padding:10px;gap:4px}
   .card-body h3{font-size:16px}
@@ -231,8 +255,8 @@ td.r,th.r{text-align:right}
      ============================================================ -->
 <script>
 window.SHOP_CONFIG = {
-  SUPABASE_URL: "https://rdxpzlkidihnxkodovro.supabase.co",
-  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkeHB6bGtpZGlobnhrb2RvdnJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1NzMyOTMsImV4cCI6MjEwOTE0OTI5M30.8i1N_oxhW7LK2NBA47usV9m6ibZ0FygMonb9Zn9Gb4k"
+  SUPABASE_URL: "PASTE_YOUR_PROJECT_URL_HERE",
+  SUPABASE_ANON_KEY: "PASTE_YOUR_ANON_PUBLIC_KEY_HERE"
 };
 </script>
 
@@ -243,7 +267,7 @@ window.SHOP_CONFIG = {
 (function(){
 'use strict';
 const h=React.createElement;
-const {useState,useEffect,useSyncExternalStore,Fragment}=React;
+const {useState,useEffect,useRef,useSyncExternalStore,Fragment}=React;
 
 const CFG=window.SHOP_CONFIG||{};
 const configured=/^https:\/\/.+\.supabase\.co/.test(CFG.SUPABASE_URL||'')&&(CFG.SUPABASE_ANON_KEY||'').length>40;
@@ -287,7 +311,7 @@ function when(ts){return new Date(ts).toLocaleString('en-PH',{month:'short',day:
 function go(r){location.hash=r}
 function imgUrl(path){return path?sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl:''}
 function resolveRoute(raw,S){
-  let r=ROUTES.indexOf(raw)<0?'shop':raw;
+  let r=raw.indexOf('product/')===0?'product':(ROUTES.indexOf(raw)<0?'shop':raw);
   if(r==='login'){if(S.role==='buyer')return 'shop';if(S.role==='admin')return 'admin'}
   if(r==='admin'&&S.role!=='admin')return 'login';
   if((r==='my-orders'||r==='pay')&&S.role!=='buyer')return 'login';
@@ -310,7 +334,7 @@ function friendly(err){
 }
 
 /* ---------- data ---------- */
-const mapProduct=r=>({id:r.id,name:r.name,price:Number(r.price),stock:r.stock,category:r.category||'',description:r.description||'',image:r.image_path||null,active:r.active,createdAt:Date.parse(r.created_at)||0});
+const mapProduct=r=>({id:r.id,name:r.name,price:Number(r.price),stock:r.stock,category:r.category||'',description:r.description||'',images:(r.images&&r.images.length)?r.images:(r.image_path?[r.image_path]:[]),image:(r.images&&r.images.length)?r.images[0]:(r.image_path||null),active:r.active,createdAt:Date.parse(r.created_at)||0});
 const mapOrder=r=>({id:r.id,uid:r.user_id,status:r.status,payment:r.payment,note:r.note||'',total:Number(r.total),delivery:r.delivery||{},paid:!!r.paid,paidAt:r.paid_at?Date.parse(r.paid_at):null,payRef:r.pay_ref||'',createdAt:Date.parse(r.created_at),items:(r.order_items||[]).sort((a,b)=>a.id-b.id).map(i=>({pid:i.product_id,name:i.name,price:Number(i.price),qty:i.qty}))});
 async function loadProducts(){
   const {data,error}=await sb.from('products').select('*').order('created_at',{ascending:false});
@@ -453,6 +477,35 @@ function shrink(file){
     img.src=url;
   });
 }
+let bgLib=null;
+async function removeBg(file,onProgress){
+  if(!bgLib)bgLib=await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm');
+  return bgLib.removeBackground(file,{model:'isnet_quint8',output:{format:'image/png'},progress:(key,cur,total)=>{if(onProgress&&total)onProgress(cur/total)}});
+}
+function blobToImage(blob){
+  return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(blob),img=new Image();
+    img.onload=()=>{URL.revokeObjectURL(url);res(img)};
+    img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('load'))};
+    img.src=url;
+  });
+}
+/* crop the cut-out to the product, centre it on a square transparent canvas */
+async function tidyCutout(blob){
+  const img=await blobToImage(blob);
+  const sc0=Math.min(1,1400/Math.max(img.width,img.height));
+  const w=Math.max(1,Math.round(img.width*sc0)),hh=Math.max(1,Math.round(img.height*sc0));
+  const c0=document.createElement('canvas');c0.width=w;c0.height=hh;
+  const x0=c0.getContext('2d');x0.drawImage(img,0,0,w,hh);
+  const d=x0.getImageData(0,0,w,hh).data;
+  let minX=w,minY=hh,maxX=-1,maxY=-1;
+  for(let y=0;y<hh;y++)for(let x=0;x<w;x++){if(d[(y*w+x)*4+3]>24){if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y}}
+  if(maxX<0)return blob;
+  const cw=maxX-minX+1,ch=maxY-minY+1,side=Math.round(Math.max(cw,ch)*1.12);
+  const c=document.createElement('canvas');c.width=side;c.height=side;
+  c.getContext('2d').drawImage(c0,minX,minY,cw,ch,Math.round((side-cw)/2),Math.round((side-ch)/2),cw,ch);
+  return new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error('encode')),'image/png'));
+}
 async function downloadQr(url){
   try{
     const r=await fetch(url);const b=await r.blob();
@@ -478,7 +531,7 @@ function Empty({title,text,children,style}){
 
 /* ---------- layout ---------- */
 function Header({S,route}){
-  const link=(href,label,extra)=>h('a',{href:'#'+href,className:route===href?'on':''},label,extra);
+  const link=(href,label,extra)=>h('a',{href:'#'+href,className:(route===href||(href==='shop'&&route==='product'))?'on':''},label,extra);
   const n=cartCount(S);
   return h('header',{className:'top'},h('div',{className:'wrap'},
     h('a',{className:'brand',href:'#shop'},S.settings.shopName),
@@ -499,7 +552,7 @@ function Footer({S}){
 function ProductCard({p}){
   const out=p.stock<=0;
   return h('article',{className:'card'},
-    h('button',{className:'card-media','aria-label':'View '+p.name,onClick:()=>openModal({type:'detail',product:p,wide:true})},h(Thumb,{p,cls:'fill'})),
+    h('button',{className:'card-media','aria-label':'View '+p.name,onClick:()=>go('product/'+p.id)},h(Thumb,{p,cls:'fill'})),
     h('div',{className:'card-body'},
       h('div',{className:'cat'},p.category||'Piece'),
       h('h3',null,p.name),
@@ -541,6 +594,43 @@ function Detail({p}){
         h('div',{className:'qty'},h('button',{'aria-label':'Less',onClick:()=>setQty2(Math.max(1,qty-1))},'−'),h('span',{className:'num'},qty),h('button',{'aria-label':'More',onClick:()=>setQty2(Math.min(cur.stock,qty+1))},'+')),
         h('button',{className:'btn btn-gold',onClick:()=>{addToCart(cur.id,qty);closeModal()}},'Add to cart')):null,
       h('div',{style:{marginTop:16}},h('button',{className:'link',onClick:closeModal},'Close')))));
+}
+
+function ProductPage({S,id}){
+  const p=getProduct(S,id);
+  const [i,setI]=useState(0);const [qty,setQ]=useState(1);
+  const [bad,setBad]=useState({});
+  const tx=useRef(null);
+  if(!p)return h('div',{className:'wrap page'},S.loaded?h(Empty,{title:'Product not found',text:'It may have been removed or hidden.'},h('a',{className:'btn btn-gold',href:'#shop'},'Back to the shop')):h('p',{className:'muted'},'Loading…'),null);
+  const imgs=p.images||[];
+  const cur=Math.min(i,Math.max(imgs.length-1,0));
+  const src=imgs.length?imgUrl(imgs[cur]):'';
+  const step=d=>{if(imgs.length>1)setI((cur+d+imgs.length)%imgs.length)};
+  const inCart=S.cart[p.id]||0;
+  return h('div',{className:'wrap'},h('div',{className:'pp'},
+    h('div',{className:'gal'},
+      h('div',{className:'stage',
+        onTouchStart:e=>{tx.current=e.touches[0].clientX},
+        onTouchEnd:e=>{if(tx.current==null)return;const dx=e.changedTouches[0].clientX-tx.current;tx.current=null;if(Math.abs(dx)>45)step(dx<0?1:-1)}},
+        src&&!bad[cur]?h('img',{src,alt:p.name,onError:()=>setBad(Object.assign({},bad,{[cur]:1}))}):h('span',{className:'mono',style:{color:'#cfc6ad'}},initial(p)),
+        src&&!bad[cur]?h('button',{className:'zoom','aria-label':'Zoom photo',onClick:()=>openModal({type:'zoom',src,wide:true})},
+          h('svg',{width:20,height:20,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:2,strokeLinecap:'round'},h('circle',{cx:11,cy:11,r:7}),h('path',{d:'M21 21l-4.3-4.3M11 8v6M8 11h6'}))):null),
+      imgs.length>1?h('div',{className:'thumbs'},imgs.map((im,k)=>h('button',{key:im,className:k===cur?'on':'','aria-label':'Photo '+(k+1),onClick:()=>setI(k)},h('img',{src:imgUrl(im),alt:'',loading:'lazy'})))):null),
+    h('div',{className:'info'},
+      h('div',{className:'cat'},p.category||'Piece'),
+      h('h1',{className:'ptitle'},p.name),
+      h('div',{className:'pprice num'},peso(p.price)),
+      h('div',null,h(StockLabel,{p})),
+      p.description?h('p',{className:'pdesc'},p.description):h('div',{style:{height:18}}),
+      p.stock>0?h(Fragment,null,
+        h('div',{style:{display:'flex',justifyContent:'center'}},h('div',{className:'qty'},
+          h('button',{'aria-label':'Less',onClick:()=>setQ(Math.max(1,qty-1))},'−'),h('span',{className:'num'},qty),h('button',{'aria-label':'More',onClick:()=>setQ(Math.min(p.stock,qty+1))},'+'))),
+        h('div',{className:'buyrow'},
+          h('button',{className:'btn',onClick:()=>addToCart(p.id,qty)},'Add to cart'),
+          h('button',{className:'btn btn-gold',onClick:()=>{addToCart(p.id,qty);go('cart')}},'Buy it now')),
+        inCart?h('p',{className:'meta',style:{marginTop:12}},inCart+' of this in your cart'):null):
+        h('button',{className:'btn',disabled:true,style:{marginTop:14}},'Sold out'),
+      h('a',{className:'link back',href:'#shop'},'← Back to the shop'))));
 }
 
 /* ---------- cart, pay, orders ---------- */
@@ -777,24 +867,46 @@ function ProductsTab({S}){
 }
 function ProductForm({p}){
   const [f,setF]=useState({name:p?p.name:'',price:p?String(p.price):'',stock:p?String(p.stock):'',cat:p?p.category:'',desc:p?p.description:'',active:p?p.active:true});
-  const [imagePath,setImagePath]=useState(p&&p.image||null);
-  const [status,setStatus]=useState('');const [err,setErr]=useState('');
+  const [images,setImages]=useState(p?(p.images||[]):[]);
+  const [stripBg,setStripBg]=useState(ls.get('ng_stripbg')!=='0');
+  const [status,setStatus]=useState('');const [working,setWorking]=useState(false);const [err,setErr]=useState('');
   const [saving,setSaving]=useState(false);const [confirmDel,setConfirmDel]=useState(false);
-  const [badImg,setBadImg]=useState(false);
   const set=k=>e=>setF(Object.assign({},f,{[k]:e.target.value}));
-  const onFile=async e=>{
-    const file=e.target.files&&e.target.files[0];if(!file)return;
-    setStatus('Uploading…');
-    try{setImagePath(await uploadImage(await shrink(file),'products','jpg'));setBadImg(false);setStatus('Photo added.')}
-    catch(x){setStatus('The photo could not be uploaded. Try a smaller image.')}
+  const onFiles=async e=>{
+    const files=Array.from(e.target.files||[]);e.target.value='';
+    if(!files.length)return;
+    setWorking(true);setErr('');
+    let added=0,fell=0;
+    for(let n=0;n<files.length;n++){
+      const tag='Photo '+(n+1)+' of '+files.length;
+      try{
+        let blob,ext;
+        if(stripBg){
+          try{
+            setStatus(tag+': removing background… the first one downloads the tool and can take a minute.');
+            const out=await removeBg(files[n],pr=>setStatus(tag+': removing background '+Math.round(pr*100)+'%'));
+            setStatus(tag+': tidying…');
+            blob=await tidyCutout(out);ext='png';
+          }catch(x){fell++;blob=await shrink(files[n]);ext='jpg'}
+        }else{blob=await shrink(files[n]);ext='jpg'}
+        setStatus(tag+': uploading…');
+        const path=await uploadImage(blob,'products',ext);
+        setImages(cur=>cur.concat(path));added++;
+      }catch(x){setErr('One photo could not be uploaded. Try a smaller image.')}
+    }
+    setWorking(false);
+    setStatus(added+' photo'+(added===1?'':'s')+' added.'+(fell?' The background could not be removed on '+fell+' of them, so the original was used.':''));
   };
+  const move=(k)=>setImages(cur=>{const c=cur.slice();const [x]=c.splice(k,1);c.unshift(x);return c});
+  const drop=(k)=>setImages(cur=>cur.filter((_,j)=>j!==k));
   const submit=async e=>{
     e.preventDefault();setErr('');
     const name=f.name.trim(),price=parseFloat(f.price),stock=parseInt(f.stock,10);
     if(!name){setErr('Give the product a name.');return}
     if(!(price>=0)){setErr('Enter a price.');return}
     if(!(stock>=0)){setErr('Enter how many are in stock.');return}
-    const row={name,price,stock,category:f.cat.trim(),description:f.desc.trim(),image_path:imagePath,active:f.active,updated_at:new Date().toISOString()};
+    if(working){setErr('Wait for the photos to finish uploading.');return}
+    const row={name,price,stock,category:f.cat.trim(),description:f.desc.trim(),images,image_path:images[0]||null,active:f.active,updated_at:new Date().toISOString()};
     setSaving(true);
     const res=p?await sb.from('products').update(row).eq('id',p.id):await sb.from('products').insert(row);
     if(res.error){setSaving(false);setErr('Could not save. '+friendly(res.error));return}
@@ -813,13 +925,21 @@ function ProductForm({p}){
         h(Field,{id:'pf-stock',label:'Stock'},h('input',{id:'pf-stock',type:'number',min:'0',step:'1',inputMode:'numeric',value:f.stock,onChange:set('stock')}))),
       h(Field,{id:'pf-cat',label:'Category'},h('input',{id:'pf-cat',maxLength:40,placeholder:'e.g. Bags, Wallets, Belts',value:f.cat,onChange:set('cat')})),
       h(Field,{id:'pf-desc',label:'Description'},h('textarea',{id:'pf-desc',value:f.desc,onChange:set('desc')})),
-      h(Field,{id:'pf-file',label:'Photo'},h('div',{style:{display:'flex',gap:14,alignItems:'flex-end',flexWrap:'wrap'}},
-        h('div',{className:'preview'},h('span',{className:'mono',style:{fontSize:48}},p?initial(p):'+'),imagePath&&!badImg?h('img',{src:imgUrl(imagePath),alt:'',onError:()=>setBadImg(true)}):null),
-        h('div',{style:{minWidth:0}},h('input',{id:'pf-file',type:'file',accept:'image/*',onChange:onFile}),h('div',{className:'meta',style:{marginTop:6}},status)))),
+      h('div',{className:'field'},h('label',{htmlFor:'pf-file'},'Photos ('+images.length+')'),
+        images.length?h('div',{className:'pimgs'},images.map((im,k)=>h('div',{className:'pimg',key:im},
+          h('div',{className:'box1'},h('img',{src:imgUrl(im),alt:'Photo '+(k+1)})),
+          k===0?h('div',{className:'tag'},'Main photo'):h('button',{type:'button',className:'btn',onClick:()=>move(k)},'Make main'),
+          h('button',{type:'button',className:'btn btn-danger',onClick:()=>drop(k)},'Remove')))):
+          h('p',{className:'meta',style:{margin:0}},'No photos yet. The first photo is the main one shown in the shop.'),
+        h('input',{id:'pf-file',type:'file',accept:'image/*',multiple:true,disabled:working,onChange:onFiles}),
+        h('div',{className:'check',style:{marginTop:10,marginBottom:0}},
+          h('input',{id:'pf-bg',type:'checkbox',checked:stripBg,disabled:working,onChange:e=>{setStripBg(e.target.checked);ls.set('ng_stripbg',e.target.checked?'1':'0')}}),
+          h('label',{htmlFor:'pf-bg'},'Remove the background automatically')),
+        status?h('div',{className:'meta',style:{marginTop:6}},status):null),
       h('div',{className:'check'},h('input',{id:'pf-active',type:'checkbox',checked:f.active,onChange:e=>setF(Object.assign({},f,{active:e.target.checked}))}),h('label',{htmlFor:'pf-active'},'Show in the shop')),
       err?h('p',{className:'err'},err):null,
       h('div',{className:'actions'},
-        h('button',{className:'btn btn-gold',type:'submit',disabled:saving},'Save product'),
+        h('button',{className:'btn btn-gold',type:'submit',disabled:saving||working},'Save product'),
         h('button',{className:'btn',type:'button',onClick:closeModal},'Cancel'),
         p?h('button',{className:'btn btn-danger',type:'button',onClick:()=>setConfirmDel(true)},'Delete'):null),
       confirmDel?h('div',{className:'actions',style:{marginTop:12}},h('span',{className:'meta'},'Delete this product for good?'),
@@ -926,6 +1046,7 @@ function ModalHost({S}){
   if(m.type==='detail')body=h(Detail,{p:m.product});
   else if(m.type==='adminLogin')body=h(AdminLoginModal);
   else if(m.type==='recovery')body=h(RecoveryModal);
+  else if(m.type==='zoom')body=h('div',null,h('div',{style:{background:'#fff'}},h('img',{src:m.src,alt:'',style:{display:'block',width:'100%',maxHeight:'80vh',objectFit:'contain'}})),h('div',{style:{marginTop:12}},h('button',{className:'link',onClick:closeModal},'Close')));
   else body=h(ProductForm,{p:m.product});
   return h('div',{className:'veil',onMouseDown:e=>{if(e.target===e.currentTarget)closeModal()}},
     h('div',{key:m.id,className:'modal'+(m.wide?' wide':'')+(m.light?' light':''),role:'dialog','aria-modal':'true'},body));
@@ -952,6 +1073,7 @@ function App(){
   let view;
   if(!S.ready&&protectedRaw)view=h('div',{className:'wrap page'},h('p',{className:'muted'},'Loading…'));
   else if(route==='shop')view=h(Shop,{S});
+  else if(route==='product')view=h(ProductPage,{S,id:raw.slice(8)});
   else if(route==='cart')view=h(Cart,{S});
   else if(route==='my-orders')view=h(MyOrders,{S});
   else if(route==='pay')view=h(Pay,{S});
