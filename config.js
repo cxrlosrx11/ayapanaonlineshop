@@ -6,6 +6,6 @@
 // The anon key is meant to be public. Never paste the service_role key here.
 // ---------------------------------------------------------------
 window.SHOP_CONFIG = {
-  SUPABASE_URL: "PASTE_YOUR_PROJECT_URL_HERE",
-  SUPABASE_ANON_KEY: "PASTE_YOUR_ANON_PUBLIC_KEY_HERE"
+  SUPABASE_URL: "https://rdxpzlkidihnxkodovro.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_BqIupe6NEb9EYJsRvH0l_A_P-hV4spt"
 };
