@@ -4,7 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b0a08">
-<title>Noir &amp; Gold</title>
+<title>Ayapana Online Shop</title>
+<meta name="description" content="Ayapana Online Shop, Pretty Bags Shop in Angeles, Pampanga. Legit at secure. Shop bags and wallets and pay by QR, cash on delivery or cash on pick up.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ayapana Online Shop">
+<meta property="og:description" content="Pretty Bags Shop in Angeles, Pampanga. Legit at secure.">
+<meta property="og:image" content="https://cxrlosrx11.github.io/ayapanaonlineshop/banner.JPG">
+<meta property="og:url" content="https://cxrlosrx11.github.io/ayapanaonlineshop/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0a08'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' font-family='Georgia,serif' font-weight='700' fill='%23e6c66f'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap">
@@ -28,6 +36,7 @@
   --border:#e2d9c4; --accent:#8f6c1f; --accent-hi:#c9a24a;
   --mut:#6b634f; --good:#1f6b3b; --warn:#8a5a0c; --bad:#a3302a;
   color-scheme:light;
+  background:var(--bg); color:var(--fg);
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -45,7 +54,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:800;margin:0;text-wrap:bala
 
 /* header */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--ink);border-bottom:1px solid var(--gold-deep)}
-.top .wrap{display:flex;align-items:center;gap:20px;padding-block:12px;flex-wrap:wrap}
+.top .wrap{display:flex;align-items:center;gap:6px 20px;padding-block:10px;flex-wrap:wrap}
 .brand{font-family:var(--font-display);font-size:24px;font-weight:900;color:var(--gold-hi);text-decoration:none;margin-right:auto;line-height:1}
 .nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .nav a,.nav button{background:none;border:0;color:var(--white);text-decoration:none;padding:8px 12px;font-size:14px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent}
@@ -124,7 +133,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:800;margin:0;text-wrap:bala
 .line{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
 .line:last-child{border-bottom:0}
 .line h3{font-size:18px;overflow-wrap:anywhere}
-.qty{display:inline-flex;align-items:center;border:1px solid var(--border)}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--border);justify-self:start}
 .qty button{background:none;border:0;width:32px;height:32px;cursor:pointer;color:var(--accent-hi);font-weight:800}
 .qty span{min-width:30px;text-align:center}
 .total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--gold-deep);padding-top:14px;margin:14px 0}
@@ -195,6 +204,18 @@ td.r,th.r{text-align:right}
 .preview{width:120px;height:150px;position:relative;background:#fff;border:1px solid var(--border);overflow:hidden;max-width:100%}
 .preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:max(20px,env(safe-area-inset-bottom,0px));background:var(--gold);color:var(--ink);padding:10px 18px;font-weight:700;z-index:60;max-width:calc(100% - 32px)}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);border:0}
+.qrpay{margin:14px 0}
+.qrpay .qrcard{max-width:240px;margin:0 auto 12px}
+.steps{margin:14px 0;padding-left:20px;color:var(--mut);font-size:14px}
+.steps li{margin-bottom:6px}
+.steps strong{color:var(--gold-hi)}
+.upload{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center;border:2px dashed var(--gold-deep);border-radius:10px;padding:16px;cursor:pointer;color:var(--gold-hi);font-weight:700;background:var(--surface-2)}
+.upload:hover{border-color:var(--gold)}
+.upload.done{border-style:solid;border-color:var(--good);color:var(--good)}
+.upload.busy{opacity:.7;cursor:progress}
+.upload img{width:72px;height:72px;object-fit:cover;border-radius:6px;border:1px solid var(--border)}
+.sr:focus-visible+.upload{outline:2px solid var(--accent-hi);outline-offset:2px}
 /* product page */
 .pp{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start;padding-block:24px 64px}
 .gal{min-width:0}
@@ -231,7 +252,11 @@ td.r,th.r{text-align:right}
   .cart,.detail,.two{grid-template-columns:minmax(0,1fr)}
   .line{grid-template-columns:minmax(0,1fr) auto}
   .line .qty{grid-column:1}
-  .brand{font-size:21px}
+  .brand{font-size:20px;flex:1 0 100%}
+  .nav{flex:1 0 100%;flex-wrap:nowrap;overflow-x:auto;margin-left:-10px;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a,.nav button{padding:6px 10px;font-size:13.5px;white-space:nowrap}
+  .who{display:none}
   .pp{grid-template-columns:minmax(0,1fr);gap:14px;padding-block:12px 48px}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .card-body{padding:10px;gap:4px}
@@ -249,20 +274,7 @@ td.r,th.r{text-align:right}
 <div id="root"></div>
 <noscript>This shop needs JavaScript turned on.</noscript>
 
-<!-- ============================================================
-     SETUP: paste your two Supabase values between the quotes.
-     Supabase dashboard > Project Settings > API
-       Project URL  -> looks like https://abcdxyz.supabase.co
-       anon public key -> a long string starting with eyJ
-     The anon key is meant to be public. Row-level security in
-     supabase-setup.sql is what protects your data.
-     ============================================================ -->
-<script>
-window.SHOP_CONFIG = {
-  SUPABASE_URL: "https://rdxpzlkidihnxkodovro.supabase.co",
-  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkeHB6bGtpZGlobnhrb2RvdnJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1NzMyOTMsImV4cCI6MjEwOTE0OTI5M30.8i1N_oxhW7LK2NBA47usV9m6ibZ0FygMonb9Zn9Gb4k"
-};
-</script>
+<script src="config.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
@@ -276,13 +288,14 @@ const {useState,useEffect,useRef,useSyncExternalStore,Fragment}=React;
 const CFG=window.SHOP_CONFIG||{};
 const configured=/^https:\/\/.+\.supabase\.co/.test(CFG.SUPABASE_URL||'')&&(CFG.SUPABASE_ANON_KEY||'').length>40;
 const BUCKET='shop-images';
+const PROOF_BUCKET='payment-proofs';
 let sb=null;
 if(configured&&window.supabase){sb=window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY)}
 
-const ROUTES=['shop','cart','my-orders','pay','login','admin'];
+const ROUTES=['shop','cart','my-orders','login','admin'];
 const STATUS={pending:'Pending',accepted:'Accepted',completed:'Completed',declined:'Declined',cancelled:'Cancelled'};
 const PAY={qr:'Pay by QR code',cod:'Cash on delivery',cop:'Cash on pick up'};
-const DEFAULTS={shopName:'Noir & Gold',tagline:'Bags, wallets and everyday carry.',contact:'',payNote:'',qrImage:null};
+const DEFAULTS={shopName:'Ayapana Online Shop',tagline:'Pretty Bags Shop. Legit at secure.',contact:'',payNote:'',qrImage:null};
 
 /* ---------- tiny store ---------- */
 const ls={
@@ -293,7 +306,7 @@ let cart0={};try{cart0=JSON.parse(ls.get('ng_cart')||'{}')||{}}catch(e){}
 let state={
   ready:false,configured,error:null,user:null,isAdmin:false,role:null,profile:null,
   products:[],orders:[],settings:Object.assign({},DEFAULTS),loaded:false,
-  cart:cart0,modal:null,toast:null,payId:null
+  cart:cart0,modal:null,toast:null
 };
 const listeners=new Set();
 function setState(p){
@@ -318,7 +331,7 @@ function resolveRoute(raw,S){
   let r=raw.indexOf('product/')===0?'product':(ROUTES.indexOf(raw)<0?'shop':raw);
   if(r==='login'){if(S.role==='buyer')return 'shop';if(S.role==='admin')return 'admin'}
   if(r==='admin'&&S.role!=='admin')return 'login';
-  if((r==='my-orders'||r==='pay')&&S.role!=='buyer')return 'login';
+  if(r==='my-orders'&&S.role!=='buyer')return 'login';
   return r;
 }
 function cartCount(S){return Object.keys(S.cart).reduce((a,k)=>a+S.cart[k],0)}
@@ -339,7 +352,7 @@ function friendly(err){
 
 /* ---------- data ---------- */
 const mapProduct=r=>({id:r.id,name:r.name,price:Number(r.price),stock:r.stock,category:r.category||'',description:r.description||'',images:(r.images&&r.images.length)?r.images:(r.image_path?[r.image_path]:[]),image:(r.images&&r.images.length)?r.images[0]:(r.image_path||null),active:r.active,createdAt:Date.parse(r.created_at)||0});
-const mapOrder=r=>({id:r.id,uid:r.user_id,status:r.status,payment:r.payment,note:r.note||'',total:Number(r.total),delivery:r.delivery||{},paid:!!r.paid,paidAt:r.paid_at?Date.parse(r.paid_at):null,payRef:r.pay_ref||'',createdAt:Date.parse(r.created_at),items:(r.order_items||[]).sort((a,b)=>a.id-b.id).map(i=>({pid:i.product_id,name:i.name,price:Number(i.price),qty:i.qty}))});
+const mapOrder=r=>({id:r.id,uid:r.user_id,status:r.status,payment:r.payment,note:r.note||'',total:Number(r.total),delivery:r.delivery||{},paid:!!r.paid,proofPath:r.proof_path||null,paidAt:r.paid_at?Date.parse(r.paid_at):null,payRef:r.pay_ref||'',createdAt:Date.parse(r.created_at),items:(r.order_items||[]).sort((a,b)=>a.id-b.id).map(i=>({pid:i.product_id,name:i.name,price:Number(i.price),qty:i.qty}))});
 async function loadProducts(){
   const {data,error}=await sb.from('products').select('*').order('created_at',{ascending:false});
   if(error){setState({loaded:true,error:'The shop could not load its products. Check that the SQL setup was run.'});return}
@@ -384,7 +397,7 @@ async function authLogin(email,password){
 async function authSignup(f){
   if(!f.name.trim()||!f.phone.trim()||!f.address.trim())return {error:'Fill in your name, mobile number and address.'};
   if(!f.email.trim())return {error:'Enter your email.'};
-  if(f.password.length<6)return {error:'Use a password with at least 6 characters.'};
+  if(f.password.length<8)return {error:'Use a password with at least 8 characters.'};
   const {data,error}=await sb.auth.signUp({email:f.email.trim(),password:f.password,options:{data:{name:f.name.trim(),phone:f.phone.trim(),address:f.address.trim()}}});
   if(error)return {error:friendly(error)};
   if(data.session){await handleSession(data.session);go(Object.keys(state.cart).length?'cart':'shop');return {}}
@@ -420,7 +433,7 @@ function setQty(id,n){
   if(!p||n<=0)delete c[id];else c[id]=Math.min(n,p.stock);
   saveCart(c);
 }
-async function placeOrder(payment,note,delivery){
+async function placeOrder(payment,note,delivery,proof,ref){
   const items=[];
   Object.keys(state.cart).forEach(id=>{
     const p=getProduct(state,id),q=state.cart[id];
@@ -429,7 +442,8 @@ async function placeOrder(payment,note,delivery){
   if(!items.length)return 'Your cart has no available items.';
   const dv={name:delivery.name.trim(),phone:delivery.phone.trim(),address:delivery.address.trim()};
   if(!dv.name||!dv.phone||!dv.address)return 'Fill in your name, mobile number and address.';
-  const {data,error}=await sb.rpc('place_order',{p_items:items,p_payment:payment,p_note:note.trim(),p_delivery:dv});
+  if(payment==='qr'&&!proof)return 'Upload a screenshot of your payment to place this order.';
+  const {data,error}=await sb.rpc('place_order',{p_items:items,p_payment:payment,p_note:note.trim(),p_delivery:dv,p_proof:payment==='qr'?proof:null,p_ref:(ref||'').trim()});
   if(error)return friendly(error);
   const pr=state.profile;
   if(!pr||pr.name!==dv.name||pr.phone!==dv.phone||pr.address!==dv.address){
@@ -438,8 +452,8 @@ async function placeOrder(payment,note,delivery){
   }
   saveCart({});
   await Promise.all([loadOrders(),loadProducts()]);
-  if(payment==='qr'){setState({payId:data});toast('Order '+data+' placed. Scan the code to pay.');go('pay')}
-  else{toast('Order '+data+' placed. The shop will confirm it soon.');go('my-orders')}
+  toast(payment==='qr'?'Order '+data+' placed. The shop will check your payment and confirm it.':'Order '+data+' placed. The shop will confirm it soon.');
+  go('my-orders');
   return null;
 }
 async function setStatus(o,status){
@@ -448,11 +462,6 @@ async function setStatus(o,status){
   if(error){toast(friendly(error));return}
   await Promise.all([loadOrders(),loadProducts()]);
   toast('Order '+o.id+' marked '+STATUS[status].toLowerCase());
-}
-async function reportPaid(o,ref){
-  const {error}=await sb.rpc('report_payment',{p_order:o.id,p_ref:ref});
-  if(error){toast(friendly(error));return false}
-  await loadOrders();return true;
 }
 async function saveSettings(patch){
   const c=state.settings;
@@ -467,19 +476,39 @@ async function uploadImage(blob,folder,ext){
   if(error)throw error;
   return path;
 }
-function shrink(file){
+function shrink(file,max=1200,q=0.86){
   return new Promise((res,rej)=>{
     const url=URL.createObjectURL(file),img=new Image();
     img.onload=()=>{
-      const sc=Math.min(1,1200/Math.max(img.width,img.height));
+      const sc=Math.min(1,max/Math.max(img.width,img.height));
       const c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);
       c.getContext('2d').drawImage(img,0,0,c.width,c.height);
       URL.revokeObjectURL(url);
-      c.toBlob(b=>b?res(b):rej(new Error('encode')),'image/jpeg',0.86);
+      c.toBlob(b=>b?res(b):rej(new Error('encode')),'image/jpeg',q);
     };
     img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('load'))};
     img.src=url;
   });
+}
+function toPng(file,max=1600){
+  return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(file),img=new Image();
+    img.onload=()=>{
+      const sc=Math.min(1,max/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob(b=>b?res(b):rej(new Error('encode')),'image/png');
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('load'))};
+    img.src=url;
+  });
+}
+async function uploadProof(blob){
+  const path=state.user.id+'/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.jpg';
+  const {error}=await sb.storage.from(PROOF_BUCKET).upload(path,blob,{contentType:'image/jpeg',cacheControl:'3600'});
+  if(error)throw error;
+  return path;
 }
 let bgLib=null;
 async function removeBg(file,onProgress){
@@ -547,9 +576,10 @@ function Header({S,route}){
         S.role==='buyer'?h(Fragment,null,link('my-orders','My orders'),h('span',{className:'who'},(S.profile&&S.profile.name)||S.user.email),h('button',{onClick:logout},'Log out')):link('login','Log in')))));
 }
 function Footer({S}){
+  const parts=(S.settings.contact||'').split('|').map(x=>x.trim()).filter(Boolean);
   return h('footer',{className:'foot'},h('div',{className:'wrap'},
-    h('span',null,S.settings.shopName+(S.settings.contact?'  ·  '+S.settings.contact:'')),
-    S.role?null:h('button',{className:'link',onClick:()=>openModal({type:'adminLogin'})},'Owner login')));
+    h('div',null,h('strong',{style:{color:'var(--fg)'}},S.settings.shopName),parts.length?h('div',{className:'meta',style:{marginTop:4}},parts.join('  ·  ')):null),
+    S.role?null:h('button',{className:'link small',onClick:()=>openModal({type:'adminLogin'})},'Owner login')));
 }
 
 /* ---------- shop ---------- */
@@ -560,7 +590,7 @@ function ProductCard({p}){
     h('div',{className:'card-body'},
       h('div',{className:'cat'},p.category||'Piece'),
       h('h3',null,p.name),
-      h('div',{className:'row'},h('span',{className:'price'},peso(p.price)),h(StockLabel,{p})),
+      h('div',{className:'row'},h('span',{className:'price'},peso(p.price)),out?null:h(StockLabel,{p})),
       h('button',{className:'btn btn-gold',disabled:out,onClick:()=>addToCart(p.id,1)},out?'Sold out':'Add to cart')));
 }
 function Banner(){
@@ -578,7 +608,7 @@ function Shop({S}){
   const shown=list.filter(p=>(catNow==='All'||p.category===catNow)&&(!q||(p.name+' '+p.description+' '+p.category).toLowerCase().indexOf(q.toLowerCase())>=0));
   const owner=S.role==='admin';
   let body;
-  if(S.error&&!list.length)body=h('div',{className:'notice'},h('h2',{style:{fontSize:24,marginBottom:8}},'The shop is not loading'),h('p',{className:'muted',style:{margin:0}},S.error));
+  if(S.error&&!list.length)body=h('div',{className:'notice'},h('h2',{style:{fontSize:24,marginBottom:8}},'The shop is not loading'),h('p',{className:'muted',style:{margin:0}},S.role==='admin'?S.error:'Please check your connection and refresh the page in a moment.'));
   else if(list.length)body=h(Fragment,null,
     h('div',{className:'toolbar'},
       h('input',{className:'search',type:'search',placeholder:'Search products','aria-label':'Search products',value:q,onChange:e=>setQ(e.target.value)}),
@@ -593,22 +623,6 @@ function Shop({S}){
     h('section',{className:'hero'},h('div',{className:'wrap'},h('div',{className:'eyebrow'},'The collection'),h('h1',null,S.settings.shopName),h('p',null,S.settings.tagline),h('button',{className:'btn btn-gold',onClick:toProducts},'Shop now'))),
     h('div',{className:'wrap',id:'products'},body));
 }
-function Detail({p}){
-  const [qty,setQty2]=useState(1);
-  const cur=getProduct(state,p.id)||p;
-  return h('div',null,h('div',{className:'detail'},
-    h(Thumb,{p:cur,cls:'card-media'}),
-    h('div',null,
-      h('div',{className:'cat'},cur.category||'Piece'),
-      h('h2',{style:{margin:'6px 0 10px'}},cur.name),
-      h('div',{className:'row'},h('span',{className:'price'},peso(cur.price)),h(StockLabel,{p:cur})),
-      h('p',{className:'muted',style:{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}},cur.description||'No description yet.'),
-      cur.stock>0?h('div',{style:{display:'flex',gap:12,alignItems:'center',flexWrap:'wrap',marginTop:16}},
-        h('div',{className:'qty'},h('button',{'aria-label':'Less',onClick:()=>setQty2(Math.max(1,qty-1))},'−'),h('span',{className:'num'},qty),h('button',{'aria-label':'More',onClick:()=>setQty2(Math.min(cur.stock,qty+1))},'+')),
-        h('button',{className:'btn btn-gold',onClick:()=>{addToCart(cur.id,qty);closeModal()}},'Add to cart')):null,
-      h('div',{style:{marginTop:16}},h('button',{className:'link',onClick:closeModal},'Close')))));
-}
-
 function ProductPage({S,id}){
   const p=getProduct(S,id);
   const [i,setI]=useState(0);const [qty,setQ]=useState(1);
@@ -650,11 +664,14 @@ function ProductPage({S,id}){
 function Cart({S}){
   const qrOn=!!S.settings.qrImage;
   const [payment,setPayment]=useState('cod');const [touched,setTouched]=useState(false);
-  const [note,setNote]=useState('');
+  const [note,setNote]=useState('');const [ref,setRef]=useState('');
   const [d,setD]=useState({name:'',phone:'',address:''});
   const [err,setErr]=useState('');const [busy,setBusy]=useState(false);
+  const [proof,setProof]=useState(null);const [upBusy,setUpBusy]=useState(false);const [upErr,setUpErr]=useState('');
+  const [qrBad,setQrBad]=useState(false);
   useEffect(()=>{if(S.profile)setD(cur=>cur.name||cur.phone||cur.address?cur:{name:S.profile.name,phone:S.profile.phone,address:S.profile.address})},[S.profile]);
   useEffect(()=>{if(qrOn&&!touched)setPayment('qr');if(!qrOn&&payment==='qr')setPayment('cod')},[qrOn]);
+  useEffect(()=>()=>{if(proof&&proof.preview)URL.revokeObjectURL(proof.preview)},[proof]);
   const ids=Object.keys(S.cart);
   if(!ids.length)return h('div',{className:'wrap page'},h('h1',null,'Your cart'),
     h(Empty,{style:{marginTop:24},title:'Your cart is empty',text:'Add something from the collection.'},h('a',{className:'btn btn-gold',href:'#shop'},'Browse the shop')));
@@ -669,8 +686,27 @@ function Cart({S}){
       h('div',{style:{textAlign:'right'}},h('div',{className:'num price',style:{fontSize:18}},peso(p.price*q)),h('button',{className:'link small',onClick:()=>setQty(id,0)},'Remove')));
   });
   const set=k=>e=>setD(Object.assign({},d,{[k]:e.target.value}));
-  const submit=async()=>{setBusy(true);setErr('');const r=await placeOrder(payment,note,d);setBusy(false);if(r)setErr(r)};
+  const onProof=async e=>{
+    const file=e.target.files&&e.target.files[0];e.target.value='';
+    if(!file)return;
+    if(!/^image\//.test(file.type)){setUpErr('Choose an image. A screenshot of your payment works best.');return}
+    setUpBusy(true);setUpErr('');
+    try{
+      const blob=await shrink(file,1600,0.85);
+      const path=await uploadProof(blob);
+      const old=proof&&proof.path;
+      setProof({path,preview:URL.createObjectURL(blob)});
+      if(old)sb.storage.from(PROOF_BUCKET).remove([old]);
+    }catch(x){setUpErr('The screenshot could not be uploaded. Try again, or choose a different image.')}
+    setUpBusy(false);
+  };
+  const needProof=payment==='qr'&&!proof;
+  const submit=async()=>{
+    if(needProof){setErr('Upload a screenshot of your payment to place this order.');return}
+    setBusy(true);setErr('');const r=await placeOrder(payment,note,d,proof&&proof.path,ref);setBusy(false);if(r)setErr(r);
+  };
   const buyer=S.role==='buyer';
+  const qr=qrOn?imgUrl(S.settings.qrImage):'';
   const opts=[['qr','Pay by QR code (GCash, Maya, bank apps)'],['cod','Cash on delivery'],['cop','Cash on pick up']];
   return h('div',{className:'wrap page'},h('h1',null,'Checkout'),
     h('div',{className:'cart',style:{marginTop:20}},
@@ -689,59 +725,58 @@ function Cart({S}){
           h('div',{className:'radios',role:'radiogroup','aria-label':'Payment method'},opts.map(o=>{
             const off=o[0]==='qr'&&!qrOn;
             return h('label',{key:o[0],className:(payment===o[0]?'on':'')+(off?' off':'')},
-              h('input',{type:'radio',name:'pay',checked:payment===o[0],disabled:off,onChange:()=>{setPayment(o[0]);setTouched(true)}}),
+              h('input',{type:'radio',name:'pay',checked:payment===o[0],disabled:off,onChange:()=>{setPayment(o[0]);setTouched(true);setErr('')}}),
               h('span',null,o[1],off?h('span',{className:'meta',style:{display:'block',fontWeight:400}},'The shop has not added a QR code yet'):null));
           })),
-          h('div',{className:'infobox'},payment==='qr'?'After you place the order, you will see the shop’s QR code. Scan it with your GCash, Maya or bank app to pay.':payment==='cod'?'You pay in cash when your order is delivered.':'You pay in cash when you pick up your order.'),
+          payment==='qr'?h('div',{className:'qrpay'},
+            qr&&!qrBad?h(Fragment,null,
+              h('div',{className:'qrcard'},h('img',{src:qr,alt:'Payment QR code',onError:()=>setQrBad(true)})),
+              h('button',{type:'button',className:'btn',style:{width:'100%'},onClick:()=>downloadQr(qr)},'Download QR code')):
+              h('p',{className:'meta'},'The QR code could not be loaded. Refresh the page or choose another payment method.'),
+            h('ol',{className:'steps'},
+              h('li',null,'Scan the QR code with GCash, Maya or your bank app, or download it and upload it from your gallery.'),
+              h('li',null,'Pay exactly ',h('strong',{className:'num'},peso(total)),'.'),
+              h('li',null,'Upload a screenshot of your payment below. You cannot place the order without it.')),
+            S.settings.payNote?h('p',{className:'meta',style:{whiteSpace:'pre-wrap'}},S.settings.payNote):null,
+            h(Field,{id:'pay-ref',label:'Reference number (optional)'},h('input',{id:'pay-ref',maxLength:80,value:ref,onChange:e=>setRef(e.target.value)})),
+            h('input',{id:'proof-file',className:'sr',type:'file',accept:'image/*',onChange:onProof,disabled:upBusy}),
+            h('label',{htmlFor:'proof-file',className:'upload'+(proof?' done':'')+(upBusy?' busy':'')},
+              proof?h('img',{src:proof.preview,alt:'Your payment screenshot'}):null,
+              h('span',null,upBusy?'Uploading…':proof?'Screenshot uploaded. Tap to replace it.':'Tap to upload your payment screenshot')),
+            upErr?h('p',{className:'err',style:{marginTop:8}},upErr):null):
+          h('div',{className:'infobox'},payment==='cod'?'You pay in cash when your order is delivered.':'You pay in cash when you pick up your order.'),
           h(Field,{id:'note',label:'Note for the shop (optional)'},h('textarea',{id:'note',value:note,onChange:e=>setNote(e.target.value)})),
           err?h('p',{className:'err'},err):null,
-          h('button',{className:'btn btn-gold',style:{width:'100%'},disabled:busy,onClick:submit},busy?'Sending…':(payment==='qr'?'Place order and pay':'Place order')),
+          h('button',{className:'btn btn-gold',style:{width:'100%'},disabled:busy||upBusy||needProof,onClick:submit},busy?'Sending…':needProof?'Upload your payment screenshot to continue':'Place order'),
           h('p',{className:'meta',style:{margin:'10px 0 0'}},'The shop reviews every order and confirms it.')):
         h(Fragment,null,h('p',{className:'muted'},'Log in as a buyer to place this order. Your cart is kept.'),h('a',{className:'btn btn-gold',style:{width:'100%'},href:'#login'},'Log in to order')))));
 }
-function Pay({S}){
-  const mine=S.orders.filter(o=>o.uid===S.user.id);
-  const o=mine.find(x=>x.id===S.payId)||mine.find(x=>x.payment==='qr'&&x.status==='pending'&&!x.paid);
-  const [ref,setRef]=useState('');const [busy,setBusy]=useState(false);const [bad,setBad]=useState(false);
-  if(!o)return h('div',{className:'wrap page'},h('h1',null,'Payment'),
-    h(Empty,{style:{marginTop:24},title:'Nothing to pay right now',text:'Orders you pay by QR code show up here while they wait for payment.'},h('a',{className:'btn btn-gold',href:'#my-orders'},'My orders')));
-  const qr=S.settings.qrImage?imgUrl(S.settings.qrImage):'';
-  const markPaid=async()=>{
-    setBusy(true);const ok=await reportPaid(o,ref.trim());setBusy(false);
-    if(ok){setState({payId:null});toast('Thanks. The shop will check your payment.');go('my-orders')}
+function ProofButton({o,admin}){
+  const [busy,setBusy]=useState(false);
+  const open=async()=>{
+    setBusy(true);
+    const {data,error}=await sb.storage.from(PROOF_BUCKET).createSignedUrl(o.proofPath,600);
+    setBusy(false);
+    if(error||!data){toast('Could not open the screenshot. Try again.');return}
+    openModal({type:'zoom',src:data.signedUrl,wide:true});
   };
-  return h('div',{className:'wrap page'},h('div',{className:'panel',style:{maxWidth:520,margin:'0 auto'}},
-    h('div',{className:'meta',style:{textAlign:'center'}},'Order #'+o.id),
-    h('div',{className:'sum',style:{marginTop:10}},h('span',null,'Subtotal'),h('span',{className:'num'},peso(o.total))),
-    h('div',{className:'sum'},h('span',null,'Fees'),h('span',null,'Free')),
-    h('div',{className:'total'},h('strong',{style:{fontSize:18,color:'var(--fg)'}},'Total due'),h('strong',{className:'num'},peso(o.total))),
-    h('h2',{style:{textAlign:'center',fontSize:24}},'Scan QR code to pay'),
-    qr&&!bad?h(Fragment,null,
-      h('div',{className:'qrcard'},h('img',{src:qr,alt:'Payment QR code',onError:()=>setBad(true)})),
-      h('button',{className:'btn',style:{width:'100%'},onClick:()=>downloadQr(qr)},'Download QR code')):
-      h('p',{className:'muted',style:{textAlign:'center'}},'The shop has not added a QR code yet. Message the shop to arrange payment.'),
-    h('p',{className:'meta',style:{textAlign:'center',marginTop:12}},'Open GCash, Maya or your bank app and scan the code, or upload the saved image. Pay exactly '+peso(o.total)+'.'),
-    S.settings.payNote?h('p',{className:'meta',style:{whiteSpace:'pre-wrap',textAlign:'center'}},S.settings.payNote):null,
-    o.paid?h('div',{className:'infobox'},'You told the shop you paid. They will confirm your order soon.'):h(Fragment,null,
-      h(Field,{id:'ref',label:'Reference number (optional)'},h('input',{id:'ref',value:ref,onChange:e=>setRef(e.target.value)})),
-      h('button',{className:'btn btn-gold',style:{width:'100%'},disabled:busy,onClick:markPaid},busy?'Sending…':'I’ve paid')),
-    h('div',{style:{textAlign:'center',marginTop:14}},h('a',{className:'link',href:'#my-orders'},o.paid?'Back to my orders':'Pay later'))));
+  return h('button',{className:'btn btn-sm',disabled:busy,onClick:open},busy?'Opening…':(admin?'View payment screenshot':'View my screenshot'));
 }
 function OrderCard({o,admin}){
   const dv=o.delivery||{};
-  const canPay=!admin&&o.payment==='qr'&&o.status==='pending'&&!o.paid;
+  const qr=o.payment==='qr';
   return h('article',{className:'order'},
     h('header',null,h('div',null,h('strong',{className:'num'},'#'+o.id),h('div',{className:'meta'},when(o.createdAt))),h('span',{className:'pill s-'+o.status},STATUS[o.status]||o.status)),
-    admin?h('div',{className:'meta'},h('strong',{style:{color:'var(--fg)'}},dv.name),dv.phone?' · '+dv.phone:'',dv.address?h('br'):null,dv.address):null,
+    admin?h('div',{className:'meta'},h('strong',{style:{color:'var(--fg)'}},dv.name),dv.phone?h(Fragment,null,' · ',h('a',{className:'link',href:'tel:'+dv.phone},dv.phone)):null,dv.address?h('br'):null,dv.address):null,
     h('ul',null,o.items.map((i,k)=>h('li',{key:k},h('span',null,i.qty+' × '+i.name),h('span',{className:'num'},peso(i.price*i.qty))))),
     h('div',{style:{display:'flex',justifyContent:'space-between',gap:10}},h('span',{className:'meta'},PAY[o.payment]||''),h('strong',{className:'num'},peso(o.total))),
-    o.payment==='qr'?h('div',{className:'meta'},o.paid?'Customer reported payment'+(o.payRef?' · Ref '+o.payRef:'')+(o.paidAt?' · '+when(o.paidAt):''):'Waiting for payment'):null,
+    qr?h('div',{className:'meta'},o.proofPath?'Payment screenshot attached'+(o.payRef?' · Ref '+o.payRef:''):'No payment screenshot attached'):null,
     o.note?h('div',{className:'meta',style:{whiteSpace:'pre-wrap'}},'Note: '+o.note):null,
-    admin&&o.status==='pending'?h('div',{className:'actions'},h('button',{className:'btn btn-gold btn-sm',onClick:()=>setStatus(o,'accepted')},'Accept'),h('button',{className:'btn btn-danger btn-sm',onClick:()=>setStatus(o,'declined')},'Decline')):null,
-    admin&&o.status==='accepted'?h('div',{className:'actions'},h('button',{className:'btn btn-gold btn-sm',onClick:()=>setStatus(o,'completed')},'Mark completed')):null,
-    !admin&&o.status==='pending'?h('div',{className:'actions'},
-      canPay?h('button',{className:'btn btn-gold btn-sm',onClick:()=>{setState({payId:o.id});go('pay')}},'Show QR to pay'):null,
-      h('button',{className:'btn btn-danger btn-sm',onClick:()=>setStatus(o,'cancelled')},'Cancel order')):null);
+    h('div',{className:'actions'},
+      o.proofPath?h(ProofButton,{o,admin}):null,
+      admin&&o.status==='pending'?h(Fragment,null,h('button',{className:'btn btn-gold btn-sm',onClick:()=>setStatus(o,'accepted')},'Accept'),h('button',{className:'btn btn-danger btn-sm',onClick:()=>setStatus(o,'declined')},'Decline')):null,
+      admin&&o.status==='accepted'?h('button',{className:'btn btn-gold btn-sm',onClick:()=>setStatus(o,'completed')},'Mark completed'):null,
+      !admin&&o.status==='pending'?h('button',{className:'btn btn-danger btn-sm',onClick:()=>setStatus(o,'cancelled')},'Cancel order'):null));
 }
 function MyOrders({S}){
   const list=S.orders.filter(o=>o.uid===S.user.id);
@@ -753,6 +788,7 @@ function MyOrders({S}){
 /* ---------- login ---------- */
 function Login(){
   const [mode,setMode]=useState('login');
+  const [showPw,setShowPw]=useState(false);
   const [f,setF]=useState({email:'',password:'',name:'',phone:'',address:''});
   const [err,setErr]=useState('');const [info,setInfo]=useState('');const [busy,setBusy]=useState(false);
   const set=k=>e=>setF(Object.assign({},f,{[k]:e.target.value}));
@@ -772,7 +808,7 @@ function Login(){
         h(Field,{id:'bp',label:'Mobile number'},h('input',{id:'bp',type:'tel',autoComplete:'tel',value:f.phone,onChange:set('phone')})),
         h(Field,{id:'ba',label:'Delivery address or pickup name'},h('textarea',{id:'ba',autoComplete:'street-address',value:f.address,onChange:set('address')}))):null,
       h(Field,{id:'be',label:'Email'},h('input',{id:'be',type:'email',autoComplete:'email',value:f.email,onChange:set('email')})),
-      mode!=='forgot'?h(Field,{id:'bw',label:'Password'},h('input',{id:'bw',type:'password',autoComplete:mode==='signup'?'new-password':'current-password',value:f.password,onChange:set('password')})):null,
+      mode!=='forgot'?h(Fragment,null,h(Field,{id:'bw',label:mode==='signup'?'Password (at least 8 characters)':'Password'},h('input',{id:'bw',type:showPw?'text':'password',autoComplete:mode==='signup'?'new-password':'current-password',value:f.password,onChange:set('password')})),h('label',{className:'check',style:{marginTop:-4}},h('input',{type:'checkbox',checked:showPw,onChange:e=>setShowPw(e.target.checked)}),'Show password')):null,
       err?h('p',{className:'err'},err):null,
       info?h('p',{className:'ok'},info):null,
       h('button',{className:'btn btn-gold',type:'submit',disabled:busy},busy?'Please wait…':mode==='signup'?'Create account':mode==='forgot'?'Send reset link':'Log in'),
@@ -800,7 +836,7 @@ function RecoveryModal(){
   const [err,setErr]=useState('');const [busy,setBusy]=useState(false);
   const submit=async e=>{
     e.preventDefault();setErr('');
-    if(a.length<6){setErr('Use at least 6 characters.');return}
+    if(a.length<8){setErr('Use at least 8 characters.');return}
     if(a!==b){setErr('The two passwords do not match.');return}
     setBusy(true);
     const {error}=await sb.auth.updateUser({password:a});
@@ -997,8 +1033,7 @@ function QrForm({S}){
     const file=e.target.files&&e.target.files[0];if(!file)return;
     setStatus('Uploading…');
     try{
-      const ext=(file.type.split('/')[1]||'png').replace('jpeg','jpg').replace(/[^a-z0-9]/g,'')||'png';
-      const np=await uploadImage(file,'qr',ext);
+      const np=await uploadImage(await toPng(file),'qr','png');
       const old=path;
       await saveSettings({qrImage:np});
       if(old)sb.storage.from(BUCKET).remove([old]);
@@ -1019,7 +1054,7 @@ function PasswordForm({S}){
   const [msg,setMsg]=useState(null);const [busy,setBusy]=useState(false);
   const submit=async e=>{
     e.preventDefault();setMsg(null);
-    if(n1.length<6){setMsg({bad:1,t:'The new password needs at least 6 characters.'});return}
+    if(n1.length<8){setMsg({bad:1,t:'The new password needs at least 8 characters.'});return}
     if(n1!==n2){setMsg({bad:1,t:'The two new passwords do not match.'});return}
     setBusy(true);
     const chk=await sb.auth.signInWithPassword({email:S.user.email,password:cur});
@@ -1056,8 +1091,7 @@ function Admin({S}){
 function ModalHost({S}){
   const m=S.modal;if(!m)return null;
   let body;
-  if(m.type==='detail')body=h(Detail,{p:m.product});
-  else if(m.type==='adminLogin')body=h(AdminLoginModal);
+  if(m.type==='adminLogin')body=h(AdminLoginModal);
   else if(m.type==='recovery')body=h(RecoveryModal);
   else if(m.type==='zoom')body=h('div',null,h('div',{style:{background:'#fff'}},h('img',{src:m.src,alt:'',style:{display:'block',width:'100%',maxHeight:'80vh',objectFit:'contain'}})),h('div',{style:{marginTop:12}},h('button',{className:'link',onClick:closeModal},'Close')));
   else body=h(ProductForm,{p:m.product});
@@ -1073,8 +1107,8 @@ function Setup(){
   return h('div',{className:'wrap page'},h('h1',null,'Almost ready'),
     h('div',{className:'notice'},
       h('p',{style:{marginTop:0}},'This shop is not connected to a database yet.'),
-      h('p',{className:'muted'},'Open index.html, find the SHOP_CONFIG block near the top, and paste in your Supabase project URL and anon key. The README has the full steps.'),
-      h('p',{className:'muted',style:{marginBottom:0}},'Reload this page after you save the file.')));
+      h('p',{className:'muted'},'Add a file named config.js next to index.html with your Supabase project URL and anon key. The README has the exact steps.'),
+      h('p',{className:'muted',style:{marginBottom:0}},'Reload this page after you upload the file.')));
 }
 function App(){
   const S=useS();const raw=useHash();
@@ -1082,14 +1116,13 @@ function App(){
   useEffect(()=>{document.title=S.settings.shopName},[S.settings.shopName]);
   if(!S.configured||!sb)return h(Setup);
   const route=resolveRoute(raw,S);
-  const protectedRaw=raw==='login'||raw==='admin'||raw==='my-orders'||raw==='pay';
+  const protectedRaw=raw==='login'||raw==='admin'||raw==='my-orders';
   let view;
   if(!S.ready&&protectedRaw)view=h('div',{className:'wrap page'},h('p',{className:'muted'},'Loading…'));
   else if(route==='shop')view=h(Shop,{S});
   else if(route==='product')view=h(ProductPage,{S,id:raw.slice(8)});
   else if(route==='cart')view=h(Cart,{S});
   else if(route==='my-orders')view=h(MyOrders,{S});
-  else if(route==='pay')view=h(Pay,{S});
   else if(route==='login')view=h(Login);
   else view=h(Admin,{S});
   return h(Fragment,null,h(Header,{S,route}),view,h(Footer,{S}),h(ModalHost,{S}),S.toast?h('div',{className:'toast',role:'status'},S.toast):null);
