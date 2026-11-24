@@ -203,6 +203,8 @@ td.r,th.r{text-align:right}
 .detail .card-media{cursor:default}
 .preview{width:120px;height:150px;position:relative;background:#fff;border:1px solid var(--border);overflow:hidden;max-width:100%}
 .preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.fbchat{position:fixed;right:16px;bottom:max(16px,env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:#1877f2;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.45);z-index:55;transition:transform .15s}
+.fbchat:hover{transform:scale(1.07)}.fbchat:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.fbchat svg{display:block}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:max(20px,env(safe-area-inset-bottom,0px));background:var(--gold);color:var(--ink);padding:10px 18px;font-weight:700;z-index:60;max-width:calc(100% - 32px)}
 .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);border:0}
 .qrpay{margin:14px 0}
@@ -239,6 +241,7 @@ td.r,th.r{text-align:right}
 .pimg .box1 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .pimg .tag{font-size:11px;font-weight:700;color:var(--accent);text-align:center}
 .pimg button{font-size:12px;padding:4px 6px}
+.legal{max-width:760px}.legal h2{font-size:19px;margin:28px 0 8px}.legal p,.legal li{color:var(--mut);margin:0 0 10px}.legal ul{padding-left:20px;margin:0 0 10px}
 .foot{border-top:1px solid var(--border);padding-block:26px;color:var(--mut);font-size:13px}
 .foot .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 
@@ -292,7 +295,7 @@ const PROOF_BUCKET='payment-proofs';
 let sb=null;
 if(configured&&window.supabase){sb=window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY)}
 
-const ROUTES=['shop','cart','my-orders','login','admin'];
+const ROUTES=['shop','cart','my-orders','login','admin','privacy','terms'];
 const STATUS={pending:'Pending',accepted:'Accepted',completed:'Completed',declined:'Declined',cancelled:'Cancelled'};
 const PAY={qr:'Pay by QR code',cod:'Cash on delivery',cop:'Cash on pick up'};
 const DEFAULTS={shopName:'Ayapana Online Shop',tagline:'Pretty Bags Shop. Legit at secure.',contact:'',payNote:'',qrImage:null};
@@ -579,7 +582,7 @@ function Footer({S}){
   const parts=(S.settings.contact||'').split('|').map(x=>x.trim()).filter(Boolean);
   return h('footer',{className:'foot'},h('div',{className:'wrap'},
     h('div',null,h('strong',{style:{color:'var(--fg)'}},S.settings.shopName),parts.length?h('div',{className:'meta',style:{marginTop:4}},parts.join('  ·  ')):null),
-    S.role?null:h('button',{className:'link small',onClick:()=>openModal({type:'adminLogin'})},'Owner login')));
+    h('div',{style:{display:'flex',gap:14,flexWrap:'wrap',alignItems:'flex-start'}},h('a',{className:'link small',href:'#terms'},'Terms of Sale'),h('a',{className:'link small',href:'#privacy'},'Privacy Policy'),S.role?null:h('button',{className:'link small',onClick:()=>openModal({type:'adminLogin'})},'Owner login'))));
 }
 
 /* ---------- shop ---------- */
@@ -668,7 +671,7 @@ function Cart({S}){
   const [note,setNote]=useState('');const [ref,setRef]=useState('');
   const [d,setD]=useState({name:'',phone:'',address:''});
   const [err,setErr]=useState('');const [busy,setBusy]=useState(false);
-  const [proof,setProof]=useState(null);const [upBusy,setUpBusy]=useState(false);const [upErr,setUpErr]=useState('');
+  const [agree,setAgree]=useState(false);const [proof,setProof]=useState(null);const [upBusy,setUpBusy]=useState(false);const [upErr,setUpErr]=useState('');
   const [qrBad,setQrBad]=useState(false);
   useEffect(()=>{if(S.profile)setD(cur=>cur.name||cur.phone||cur.address?cur:{name:S.profile.name,phone:S.profile.phone,address:S.profile.address})},[S.profile]);
   useEffect(()=>{if(qrOn&&!touched)setPayment('qr');if(!qrOn&&payment==='qr')setPayment('cod')},[qrOn]);
@@ -704,6 +707,7 @@ function Cart({S}){
   const needProof=payment==='qr'&&!proof;
   const submit=async()=>{
     if(needProof){setErr('Upload a screenshot of your payment to place this order.');return}
+    if(!agree){setErr('Please agree to the Terms of Sale and Privacy Policy.');return}
     setBusy(true);setErr('');const r=await placeOrder(payment,note,d,proof&&proof.path,ref);setBusy(false);if(r)setErr(r);
   };
   const buyer=S.role==='buyer';
@@ -747,8 +751,9 @@ function Cart({S}){
             upErr?h('p',{className:'err',style:{marginTop:8}},upErr):null):
           h('div',{className:'infobox'},payment==='cod'?'You pay in cash when your order is delivered.':'You pay in cash when you pick up your order.'),
           h(Field,{id:'note',label:'Note for the shop (optional)'},h('textarea',{id:'note',value:note,onChange:e=>setNote(e.target.value)})),
+          h('label',{className:'check',style:{alignItems:'flex-start',marginTop:6}},h('input',{type:'checkbox',id:'agree',checked:agree,onChange:e=>setAgree(e.target.checked),style:{marginTop:4}}),h('span',{className:'small'},'I have read and agree to the ',h('a',{className:'link',href:'#terms',target:'_blank',rel:'noopener'},'Terms of Sale'),' and ',h('a',{className:'link',href:'#privacy',target:'_blank',rel:'noopener'},'Privacy Policy'),'.')),
           err?h('p',{className:'err'},err):null,
-          h('button',{className:'btn btn-gold',style:{width:'100%'},disabled:busy||upBusy||needProof,onClick:submit},busy?'Sending…':needProof?'Upload your payment screenshot to continue':'Place order'),
+          h('button',{className:'btn btn-gold',style:{width:'100%'},disabled:busy||upBusy||needProof||!agree,onClick:submit},busy?'Sending…':needProof?'Upload your payment screenshot to continue':!agree?'Agree to the terms to continue':'Place order'),
           h('p',{className:'meta',style:{margin:'10px 0 0'}},'The shop reviews every order and confirms it.')):
         h(Fragment,null,h('p',{className:'muted'},'Log in as a buyer to place this order. Your cart is kept.'),h('a',{className:'btn btn-gold',style:{width:'100%'},href:'#login'},'Log in to order')))));
 }
@@ -810,6 +815,7 @@ function Login(){
         h(Field,{id:'ba',label:'Delivery address or pickup name'},h('textarea',{id:'ba',autoComplete:'street-address',value:f.address,onChange:set('address')}))):null,
       h(Field,{id:'be',label:'Email'},h('input',{id:'be',type:'email',autoComplete:'email',value:f.email,onChange:set('email')})),
       mode!=='forgot'?h(Fragment,null,h(Field,{id:'bw',label:mode==='signup'?'Password (at least 8 characters)':'Password'},h('input',{id:'bw',type:showPw?'text':'password',autoComplete:mode==='signup'?'new-password':'current-password',value:f.password,onChange:set('password')})),h('label',{className:'check',style:{marginTop:-4}},h('input',{type:'checkbox',checked:showPw,onChange:e=>setShowPw(e.target.checked)}),'Show password')):null,
+      mode==='signup'?h('p',{className:'meta',style:{margin:'0 0 12px'}},'By creating an account you agree to our ',h('a',{className:'link',href:'#terms',target:'_blank',rel:'noopener'},'Terms of Sale'),' and ',h('a',{className:'link',href:'#privacy',target:'_blank',rel:'noopener'},'Privacy Policy'),'.'):null,
       err?h('p',{className:'err'},err):null,
       info?h('p',{className:'ok'},info):null,
       h('button',{className:'btn btn-gold',type:'submit',disabled:busy},busy?'Please wait…':mode==='signup'?'Create account':mode==='forgot'?'Send reset link':'Log in'),
@@ -1129,6 +1135,69 @@ function ShareModal({p}){
     h('p',{className:'meta',style:{marginTop:12}},'On Facebook, choose to share to your Page, or paste the link into a new Page post. The photo, name and price appear as a preview card.'),
     h('div',{style:{marginTop:10}},h('button',{className:'link',onClick:closeModal},'Close')));
 }
+/* ---------- privacy policy and terms of sale ---------- */
+const LEGAL_UPDATED='November 24, 2026';
+function legalDocs(shop,contact){
+  const c=contact||'the contact details shown at the bottom of this page';
+  return {
+    privacy:{title:'Privacy Policy',intro:shop+' ("we", "us") respects your privacy. This page explains what personal information we collect when you use this website, why we collect it, and your rights under the Data Privacy Act of 2012 (Republic Act No. 10173).',sections:[
+      ['What we collect',[
+        ['ul','Account details: your email address and password. Your password is handled by our login provider and is stored in a protected form. We cannot read it.',
+         'Delivery details: your full name, mobile number and delivery address or pick up name.',
+         'Order details: the items you order, your note to the shop, your payment method and your payment reference number.',
+         'Payment screenshot: if you pay by QR code, the screenshot you upload to prove payment.']]],
+      ['Why we use it',[
+        ['ul','To create and manage your account.','To process, confirm and deliver your order.','To check that your payment was received.','To contact you about your order.','To keep sales records and issue receipts as the law requires.']]],
+      ['Who can see it',[
+        'Your information is seen only by the shop owner. Payment screenshots are stored privately, and only you and the shop owner can open them.',
+        'We use trusted service providers to run this website: Supabase (database, login and file storage) and Netlify (website hosting). They process data only to provide those services. We share your name, mobile number and address with a courier only when needed to deliver your order.',
+        'We do not sell your personal information or use it for advertising.']],
+      ['Cookies and tracking',['This website keeps you logged in using your browser\'s storage. We do not use advertising or tracking cookies.']],
+      ['How long we keep it',['We keep your information for as long as needed to handle your order, resolve any dispute, and meet record-keeping rules for sales and taxes. After that, it is deleted or anonymised.']],
+      ['How we protect it',['We use secure connections (HTTPS), restricted access so that customers can only see their own orders, and private storage for payment screenshots. No system is perfectly secure. If a breach affecting you happens, we will act as required by law, including notifying you and the National Privacy Commission where required.']],
+      ['Your rights',[
+        'Under the Data Privacy Act you may:',
+        ['ul','ask what personal information we hold about you and get a copy;','ask us to correct wrong or outdated information;','object to, or withdraw your consent to, our use of your information;','ask us to block or delete information that is no longer needed;','claim damages if your data was misused.'],
+        'To use any of these rights, contact us using the details below. You may also file a complaint with the National Privacy Commission at privacy.gov.ph.']],
+      ['Children',['This website is for people aged 18 and above. If you are younger, please ask a parent or guardian to order for you.']],
+      ['Changes to this policy',['We may update this page. The date at the top shows when it was last changed.']],
+      ['Contact us',['Questions or requests about your data: '+c+'.']]
+    ]},
+    terms:{title:'Terms of Sale',intro:'These terms apply to every order you place on this website with '+shop+'. By placing an order or creating an account, you agree to them.',sections:[
+      ['About our items',[
+        'Many of our items are preloved. Each listing shows the item\'s name, price and description, including its condition. Please read the description and look at all photos before you order. Photos are shown to help you see the item. Small differences in colour can happen because of lighting and screens.',
+        'We describe each item honestly and as accurately as we can. Items are sold as described in the listing.']],
+      ['Your account',['Please give true and complete details, and keep your password private. You are responsible for activity under your account.']],
+      ['Prices and stock',['Prices are in Philippine pesos. Stock is limited, and most preloved items are one of a kind. We may correct a pricing or listing mistake before we accept your order.']],
+      ['Placing an order',[
+        'Placing an order is a request to buy. A sale is only made when we accept your order. We may decline an order, for example if the item is no longer available or we cannot confirm your payment.',
+        'To protect against spam, a customer can have a limited number of orders waiting for acceptance at the same time.']],
+      ['Payment',[
+        ['ul','Pay by QR code: scan or download our QR code, pay the exact total, then upload a clear screenshot of your payment. You cannot place a QR order without it. We check the payment before we accept your order.','Cash on delivery: you pay the courier or seller when you receive the item.','Cash on pick up: you pay when you collect the item.'],
+        'Fake, edited or reused payment screenshots are not allowed. We will cancel such orders and may report them to the proper authorities.']],
+      ['Delivery and pick up',['Please give a correct and complete address and a working mobile number. Delivery times are estimates, not guarantees, and delays can happen with couriers. Failed deliveries caused by a wrong address or an unanswered phone may be cancelled.']],
+      ['Cancelling an order',['You can cancel an order yourself from My orders while it is still pending. After we accept an order, please contact us as soon as possible. We will try to help, but we cannot promise to cancel it.']],
+      ['Returns, refunds and exchanges',[
+        'Because most items are preloved and one of a kind, we do not accept returns or refunds for a change of mind.',
+        'If the item you received is not as described in the listing, tell us within 3 days of receiving it. Send your order number, clear photos, and a video of opening the parcel if you have one. If we agree that the item is not as described, we will offer a refund or an exchange, whichever is available.',
+        'Nothing in these terms takes away any right you have under Philippine consumer laws.']],
+      ['Complaints',['If something is wrong, contact us first: '+c+'. We aim to reply within 2 working days and to fix problems fairly.']],
+      ['Our responsibility',['We are responsible for the items and services we provide as the law requires. We are not responsible for delays or losses caused by things outside our control, such as courier delays, natural disasters or internet outages.']],
+      ['Governing law',['These terms are governed by the laws of the Republic of the Philippines.']],
+      ['Changes',['We may update these terms. An update applies to orders placed after the date shown at the top of this page.']]
+    ]}
+  };
+}
+function Legal({S,kind}){
+  const d=legalDocs(S.settings.shopName||'Ayapana Online Shop',(S.settings.contact||'').split('|').map(x=>x.trim()).filter(Boolean).join(' · '))[kind];
+  const para=t=>h('p',null,t);
+  return h('div',{className:'wrap page legal'},
+    h('h1',null,d.title),h('p',{className:'meta',style:{marginTop:6}},'Last updated '+LEGAL_UPDATED),
+    h('p',{style:{marginTop:16}},d.intro),
+    d.sections.map((s,i)=>h('section',{key:i},h('h2',null,(i+1)+'. '+s[0]),
+      s[1].map((b,j)=>Array.isArray(b)?h('ul',{key:j},b.slice(1).map((li,k)=>h('li',{key:k},li))):h('p',{key:j},b)))),
+    h('p',{style:{marginTop:28}},h('a',{className:'link',href:'#shop'},'← Back to the shop'),'   ',h('a',{className:'link',href:kind==='terms'?'#privacy':'#terms'},kind==='terms'?'Privacy Policy':'Terms of Sale')));
+}
 function ModalHost({S}){
   const m=S.modal;if(!m)return null;
   let body;
@@ -1152,6 +1221,12 @@ function Setup(){
       h('p',{className:'muted'},'Add a file named config.js next to index.html with your Supabase project URL and anon key. The README has the exact steps.'),
       h('p',{className:'muted',style:{marginBottom:0}},'Reload this page after you upload the file.')));
 }
+function FbChat({route}){
+  const page=String(CFG.FB_PAGE||'').trim().replace(/^https?:\/\/(www\.|m\.)?(facebook\.com|fb\.com|m\.me)\//i,'').replace(/[\/?#].*$/,'');
+  if(!page||route==='admin')return null;
+  return h('a',{className:'fbchat',href:'https://m.me/'+encodeURIComponent(page),target:'_blank',rel:'noopener','aria-label':'Message us on Facebook',title:'Message us on Facebook'},
+    h('svg',{width:30,height:30,viewBox:'0 0 24 24',fill:'#fff','aria-hidden':'true'},h('path',{d:'M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z'})));
+}
 function App(){
   const S=useS();const raw=useHash();
   useEffect(()=>{const k=e=>{if(e.key==='Escape')closeModal()};document.addEventListener('keydown',k);return()=>document.removeEventListener('keydown',k)},[]);
@@ -1166,8 +1241,9 @@ function App(){
   else if(route==='cart')view=h(Cart,{S});
   else if(route==='my-orders')view=h(MyOrders,{S});
   else if(route==='login')view=h(Login);
+  else if(route==='privacy'||route==='terms')view=h(Legal,{S,kind:route});
   else view=h(Admin,{S});
-  return h(Fragment,null,h(Header,{S,route}),view,h(Footer,{S}),h(ModalHost,{S}),S.toast?h('div',{className:'toast',role:'status'},S.toast):null);
+  return h(Fragment,null,h(Header,{S,route}),view,h(Footer,{S}),h(FbChat,{route}),h(ModalHost,{S}),S.toast?h('div',{className:'toast',role:'status'},S.toast):null);
 }
 
 /* ---------- start ---------- */
