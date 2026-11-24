@@ -9,8 +9,8 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ayapana Online Shop">
 <meta property="og:description" content="Pretty Bags Shop in Angeles, Pampanga. Legit at secure.">
-<meta property="og:image" content="https://cxrlosrx11.github.io/ayapanaonlineshop/banner.JPG">
-<meta property="og:url" content="https://cxrlosrx11.github.io/ayapanaonlineshop/">
+<meta property="og:image" content="https://ayapanaonlineshop.netlify.app/banner.JPG">
+<meta property="og:url" content="https://ayapanaonlineshop.netlify.app/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0a08'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' font-family='Georgia,serif' font-weight='700' fill='%23e6c66f'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -657,6 +657,7 @@ function ProductPage({S,id}){
           h('button',{className:'btn btn-gold',onClick:()=>{addToCart(p.id,qty);go('cart')}},'Buy it now')),
         inCart?h('p',{className:'meta',style:{marginTop:12}},inCart+' of this in your cart'):null):
         h('button',{className:'btn',disabled:true,style:{marginTop:14}},'Sold out'),
+      h('div',null,h('button',{className:'link',style:{marginTop:12},onClick:()=>openModal({type:'share',product:p})},'Share this product')),
       h('a',{className:'link back',href:'#shop'},'← Back to the shop'))));
 }
 
@@ -912,7 +913,7 @@ function ProductsTab({S}){
         h('td',null,h('strong',null,p.name),h('div',{className:'meta'},p.category||'')),
         h('td',{className:'r num'},peso(p.price)),h('td',{className:'r num'},p.stock),
         h('td',null,h('span',{className:'pill '+(p.active?'s-completed':'s-cancelled')},p.active?'Visible':'Hidden')),
-        h('td',{className:'r'},h('button',{className:'btn btn-sm',onClick:()=>openModal({type:'product',product:p,light:true})},'Edit'))))))));
+        h('td',{className:'r',style:{whiteSpace:'nowrap'}},h('button',{className:'btn btn-sm',style:{marginRight:6},onClick:()=>openModal({type:'share',product:p,light:true})},'Share'),h('button',{className:'btn btn-sm',onClick:()=>openModal({type:'product',product:p,light:true})},'Edit'))))))));
 }
 function ProductForm({p}){
   const [f,setF]=useState({name:p?p.name:'',price:p?String(p.price):'',stock:p?String(p.stock):'',cat:p?p.category:'',desc:p?p.description:'',active:p?p.active:true});
@@ -1088,11 +1089,52 @@ function Admin({S}){
 }
 
 /* ---------- app ---------- */
+/* ---------- share a product (link preview for Facebook) ---------- */
+function canPreview(){return /^https?:$/.test(location.protocol)&&!/github\.io$/.test(location.hostname)}
+function shareLink(p){
+  return canPreview()?location.origin+'/p/'+p.id+'?v='+Date.now().toString(36):location.origin+location.pathname+'#product/'+p.id;
+}
+async function buildShareImage(p){
+  const src=(p.images&&p.images[0])||p.image;if(!src)return false;
+  const res=await fetch(imgUrl(src)+'?r='+Date.now(),{cache:'no-store'});if(!res.ok)return false;
+  const bmp=await createImageBitmap(await res.blob());
+  const W=1200,H=630,pad=50,cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  const c=cv.getContext('2d');c.fillStyle='#ffffff';c.fillRect(0,0,W,H);
+  const k=Math.min((W-pad*2)/bmp.width,(H-pad*2)/bmp.height);
+  const w=bmp.width*k,hh=bmp.height*k;c.drawImage(bmp,(W-w)/2,(H-hh)/2,w,hh);
+  const blob=await new Promise(r=>cv.toBlob(r,'image/jpeg',0.9));if(!blob)return false;
+  const {error}=await sb.storage.from(BUCKET).upload('share/'+p.id+'.jpg',blob,{contentType:'image/jpeg',upsert:true,cacheControl:'60'});
+  return !error;
+}
+function ShareModal({p}){
+  const owner=state.role==='admin';
+  const [link]=useState(()=>shareLink(p));
+  const [busy,setBusy]=useState(owner&&canPreview());
+  const [copied,setCopied]=useState(false);
+  useEffect(()=>{let live=true;if(owner&&canPreview())buildShareImage(p).catch(()=>{}).then(()=>{if(live)setBusy(false)});return()=>{live=false}},[]);
+  const copy=async()=>{
+    try{await navigator.clipboard.writeText(link);setCopied(true);setTimeout(()=>setCopied(false),2200)}catch(e){window.prompt('Copy this link:',link)}
+  };
+  const fb='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link);
+  const first=(p.images&&p.images[0])||p.image;
+  return h('div',null,h('h2',null,'Share this product'),
+    h('div',{style:{display:'flex',gap:12,alignItems:'center',margin:'4px 0 14px'}},
+      first?h('img',{src:imgUrl(first),alt:'',style:{width:64,height:64,objectFit:'contain',background:'#fff',borderRadius:6,flex:'none'}}):null,
+      h('div',null,h('strong',null,p.name),h('div',{className:'meta'},peso(p.price)))),
+    canPreview()?null:h('p',{className:'meta',style:{marginBottom:10}},'Link previews work on your Netlify address. This address will share a plain link.'),
+    h('div',{style:{display:'flex',flexDirection:'column',gap:8}},
+      h('a',{className:'btn btn-gold',href:fb,target:'_blank',rel:'noopener',style:busy?{pointerEvents:'none',opacity:.55}:null},busy?'Preparing preview…':'Share to Facebook'),
+      h('button',{className:'btn',onClick:copy},copied?'Link copied':'Copy link'),
+      navigator.share?h('button',{className:'btn',onClick:()=>navigator.share({title:p.name,text:p.name+' · '+peso(p.price),url:link}).catch(()=>{})},'Share with another app'):null),
+    h('p',{className:'meta',style:{marginTop:12}},'On Facebook, choose to share to your Page, or paste the link into a new Page post. The photo, name and price appear as a preview card.'),
+    h('div',{style:{marginTop:10}},h('button',{className:'link',onClick:closeModal},'Close')));
+}
 function ModalHost({S}){
   const m=S.modal;if(!m)return null;
   let body;
   if(m.type==='adminLogin')body=h(AdminLoginModal);
   else if(m.type==='recovery')body=h(RecoveryModal);
+  else if(m.type==='share')body=h(ShareModal,{p:m.product});
   else if(m.type==='zoom')body=h('div',null,h('div',{style:{background:'#fff'}},h('img',{src:m.src,alt:'',style:{display:'block',width:'100%',maxHeight:'80vh',objectFit:'contain'}})),h('div',{style:{marginTop:12}},h('button',{className:'link',onClick:closeModal},'Close')));
   else body=h(ProductForm,{p:m.product});
   return h('div',{className:'veil',onMouseDown:e=>{if(e.target===e.currentTarget)closeModal()}},
